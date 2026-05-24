@@ -1,7 +1,7 @@
 using System;
 namespace ClinicaMedicaDeEspecialidades
 {
-    public static class GestorMedicos
+    public static class GestorMedicos //esta clase se encarga de gestionar la información de los médicos.
     {
         public static string[] nombresMedicos = new string[9];
         public static void InicializarMedicos()

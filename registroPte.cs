@@ -1,6 +1,6 @@
 namespace ClinicaMedicaDeEspecialidades
 {
-    public class Paciente
+    public class Paciente //Aqui genero la clase paciente y sus atributos.
     {
         public string Expediente { get; set; } = string.Empty;
         public string Nombres { get; set; } = string.Empty;
@@ -9,14 +9,10 @@ namespace ClinicaMedicaDeEspecialidades
         public TipoTriage Triage { get; set; }
         public string Especialidad { get; set; } = string.Empty;
     }
-// AQUI TENGO QUE METER SI ES ASEGURADO O NO, PERO COMO NO LO PEDÍ EN EL FORMULARIO, LO DEJO PARA DESPUÉS 
-    public static class RegistroPacientes
-    {
-        // Lista en memoria para almacenar los pacientes
-        private static readonly List<Paciente> listaPacientes = new();
-        // Contador para generar el expediente (EXP-1, EXP-2...)
-        private static int contadorExpediente = 1;
-        // Lista de especialidades válidas requeridas
+    public static class RegistroPacientes // Lista en memoria para almacenar los pacientes.
+    { 
+        private static readonly List<Paciente> listaPacientes = new();  //Contador para generar el expediente (EXP-1, EXP-2...)
+        private static int contadorExpediente = 1; 
         public static readonly List<string> EspecialidadesValidas = new()
         {
             "Medicina General",

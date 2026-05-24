@@ -1,12 +1,12 @@
 using System;
 namespace ClinicaMedicaDeEspecialidades
 {
-    public static class GestorCobros
+    public static class GestorCobros //variable publica para que se pueda acceder desde el menu principal
     {
         public static void ProcesarCobro()
         {
             Console.Clear();
-            Console.WriteLine("--- GESTIÓN DE COBROS / CANCELAR CITA / REFERIR PACIENTE ---");
+            Console.WriteLine("=== GESTIÓN DE COBROS / CANCELAR CITA / REFERIR PACIENTE ===");
             if (GestorPacientes.contadorPacientes == 0)
             {
                 Console.WriteLine("Aun noo hay pacientes registrados en el sistema.");
@@ -38,7 +38,7 @@ namespace ClinicaMedicaDeEspecialidades
                 Console.ReadKey();
                 return;
             }
-            Console.Write("\nIngrese el número de índice (ej. 0, 1, 2) del paciente a gestionar: ");
+            Console.Write("\nIngrese el número de índice (ej. [0], [1], [2]) del paciente a gestionar: ");
             if (int.TryParse(Console.ReadLine(), out int indice) && indice >= 0 && indice < GestorPacientes.contadorPacientes && GestorPacientes.estados[indice] == 'P')
             {
                 Console.WriteLine("\n¿Qué acción desea realizar?");
@@ -46,12 +46,11 @@ namespace ClinicaMedicaDeEspecialidades
                 Console.WriteLine("2. Cancelar Cita / Referir Paciente"); 
                 Console.Write("Seleccione una opción: ");
                 string? accion = Console.ReadLine();
-
                 if (accion == "2")
                 {
                     GestorPacientes.estados[indice] = 'C'; 
                     GestorPacientes.costos[indice] = 0.0;  
-                    GestorArchivos.GuardarDatos(); // Guardar en el txt
+                    GestorArchivos.GuardarDatos(); //guarda los datos en un Txt que esta dentro de la carpeta temporal bin
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("\nCita Cancelada/Referida exitosamente. No se generarán cobros.");
                     Console.ResetColor();
@@ -71,7 +70,7 @@ namespace ClinicaMedicaDeEspecialidades
                     {
                         descuentoEdad = costoBase * 0.10;
                     }
-                    Console.WriteLine("\nFormas de Pago:");
+                    Console.WriteLine("\nFormas de Pago:"); //Esto es para mostrar las formas de pago que se pueden elegir
                     Console.WriteLine("1. Efectivo");
                     Console.WriteLine("2. Tarjeta");
                     Console.WriteLine("3. Seguro Médico");
@@ -84,14 +83,14 @@ namespace ClinicaMedicaDeEspecialidades
                     MainMenu.formasPago[indice] = formaPago;
                     if (formaPago == 3)
                     {
-                        descuentoSeguro = costoBase * 0.15;
+                        descuentoSeguro = costoBase * 0.15; //operacion del descuento del seguro medico que es del 15% del costo base
                     }
                     double totalDescuento = descuentoEdad + descuentoSeguro;
                     double totalAPagar = costoBase - totalDescuento;
                     GestorPacientes.descuentosTotales[indice] = totalDescuento;
                     GestorPacientes.costos[indice] = totalAPagar;
                     Console.WriteLine("\n=========================================");
-                    Console.WriteLine("                RESUMEN DE COBRO            ");
+                    Console.WriteLine("                RESUMEN DE COBRO            ");//Esta es la factura que se muestra en la consola.
                     Console.WriteLine("============================================");
                     Console.WriteLine($"Paciente: {GestorPacientes.nombresPacientes[indice]}");
                     Console.WriteLine($"Costo Base:         ${costoBase:F2}");
@@ -104,7 +103,7 @@ namespace ClinicaMedicaDeEspecialidades
                     if (Console.ReadLine()?.Trim().ToUpper() == "S")
                     {
                         GestorPacientes.estados[indice] = 'A'; 
-                        GestorArchivos.GuardarDatos(); // Guardar en el txt
+                        GestorArchivos.GuardarDatos(); // busca y guarda los datos en el archivo
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("\n¡Pago registrado! La cita ha sido marcada como Atendida.");
                         Console.ResetColor();
