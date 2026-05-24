@@ -1,9 +1,9 @@
 using System;
 namespace ClinicaMedicaDeEspecialidades
 {
-    public static class GestorPacientes
+    public static class GestorPacientes //esta es una clase que gestiona la info del paciente.
     {
-        public static string[] nombresPacientes = new string[100];
+        public static string[] nombresPacientes = new string[100]; //Este arreglo y los demas tiene una capacidad de guardar 100 pacientes.
         public static string[] codigosCitas = new string[100];
         public static string[] fechasCitas = new string[100];
         public static int[] edades = new int[100];
@@ -18,35 +18,35 @@ namespace ClinicaMedicaDeEspecialidades
         public static int contadorPacientes = 0;
         public static void CapturarDatosPaciente()
         {
-            Console.Clear();
+            Console.Clear(); //limpia la consola para que se vea mas ordenada.
             Console.WriteLine("--- REGISTRO DE NUEVO PACIENTE ---");
-            if (contadorPacientes >= 100)
+            if (contadorPacientes >= 100) //Si ya guarde 100 pacientes me va ha a avisar que ya no se pueden gusrdar mas.
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Error: Se ha alcanzado el límite máximo de 100 pacientes en el sistema.");
                 Console.ResetColor();
                 return;
             }
-            string nombres = "";
-            while (string.IsNullOrWhiteSpace(nombres))
+            string nombres = "";                                        //a partir de aqui inicia el imput de los pacientes.
+            while (string.IsNullOrWhiteSpace(nombres))                  //nombres.
             {
                 Console.Write("Ingrese nombres (1 o 2 nombres): ");
                 nombres = Console.ReadLine()?.Trim() ?? "";
             }
-            string apellidos = "";
+            string apellidos = "";                                       //apellidos.
             while (string.IsNullOrWhiteSpace(apellidos))
             {
                 Console.Write("Ingrese apellidos (1 o 2 apellidos): ");
                 apellidos = Console.ReadLine()?.Trim() ?? "";
             }
-            int edad;
+            int edad;                                                   //edad del paciente.
             while (true)
             {
                 Console.Write("Ingrese la edad: ");
                 if (int.TryParse(Console.ReadLine(), out edad) && edad >= 0 && edad <= 120) break;
                 Console.WriteLine("Edad no válida (Debe ser un número entre 0 y 120). Intente de nuevo.");
             }
-            TipoTriage triageSeleccionado = TipoTriage.Verde;
+            TipoTriage triageSeleccionado = TipoTriage.Verde;           //Clasificacion de Triage del paciente.
             bool triageValido = false;
             while (!triageValido)
             {
@@ -56,7 +56,7 @@ namespace ClinicaMedicaDeEspecialidades
                 Console.WriteLine("3. Rojo (Crítico, atención inmediata)");
                 Console.Write("Opción: ");
                 string? opcTriage = Console.ReadLine();
-                switch (opcTriage)
+                switch (opcTriage)                                     // ejecuta el bloque segun la opcion que elija el usuario para el triage.
                 {
                     case "1": triageSeleccionado = TipoTriage.Verde; triageValido = true; break;
                     case "2": triageSeleccionado = TipoTriage.Amarillo; triageValido = true; break;
@@ -64,7 +64,7 @@ namespace ClinicaMedicaDeEspecialidades
                     default: Console.WriteLine("Selección inválida."); break;
                 }
             }
-            int codigoEspecialidad = 1;
+            int codigoEspecialidad = 1;                                 // Aqui manda a llamar la funcion para elegir 1 especialidad medica.
             bool especialidadValida = false;
             while (!especialidadValida)
             {
@@ -98,9 +98,9 @@ namespace ClinicaMedicaDeEspecialidades
             registroDePacientes[contadorPacientes] = $"Exp: EXP-{1000 + contadorPacientes} | {nombresPacientes[contadorPacientes]} | Edad: {edad}";
             contadorPacientes++; 
             GestorArchivos.GuardarDatos(); // Para guardar los datos en el txt
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("\n¡Paciente almacenado correctamente en los arreglos estructurales!");
-            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Green; //esta linea hace que el siguiente string sea color verde.    |
+            Console.WriteLine("\n¡Paciente almacenado correctamente en los arreglos estructurales!");                // |
+            Console.ResetColor(); //esta linea hace que el texto vuelva a color por defecto despues del string anterior.|
             if (triageSeleccionado == TipoTriage.Rojo)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -114,7 +114,7 @@ namespace ClinicaMedicaDeEspecialidades
             else
             {
                 Console.WriteLine("\nPresione cualquier tecla para regresar al menú.");
-                Console.ReadKey();
+                Console.ReadKey();//pausa el codigo para que el usuario pueda leer el mensaje antes de regresar al menu principal.
             }
         }
     }

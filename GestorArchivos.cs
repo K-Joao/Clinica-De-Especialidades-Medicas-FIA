@@ -2,7 +2,7 @@ using System;
 using System.IO;
 namespace ClinicaMedicaDeEspecialidades
 {
-    public static class GestorArchivos
+    public static class GestorArchivos //esta clase se encarga de guardar y cargar los datos de los pacientes en un archivo de texto.
     {
         private const string RUTA_ARCHIVO = "pacientes_registrados.txt";
         public static void GuardarDatos()
@@ -47,7 +47,6 @@ namespace ClinicaMedicaDeEspecialidades
                     if (int.TryParse(sr.ReadLine(), out int cantidad))
                     {
                         GestorPacientes.contadorPacientes = cantidad;
-                        
                         for (int i = 0; i < cantidad; i++)
                         {
                             string? linea = sr.ReadLine();

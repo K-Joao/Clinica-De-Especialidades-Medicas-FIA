@@ -14,7 +14,7 @@ namespace ClinicaMedicaDeEspecialidades
         public static void Main(string[] args)
         {
             GestorMedicos.InicializarMedicos();
-            GestorArchivos.CargarDatos(); // Carga el txt al abrir
+            GestorArchivos.CargarDatos();
             bool continuar = true;
             while (continuar)
             {
@@ -55,37 +55,31 @@ namespace ClinicaMedicaDeEspecialidades
         {
             Console.Clear();
             Console.WriteLine("--- LISTADO DE PACIENTES REGISTRADOS ---");
-            Console.WriteLine("========================================");
-
-            if (GestorPacientes.contadorPacientes == 0)
+            Console.WriteLine("========================================"); //Este es el inicio del output de pacientes guardados
+            if (GestorPacientes.contadorPacientes == 0) //si no hay pacientes registrados, se muestra un mensaje indicando que no hay pacientes en el sistema.
             {
-                Console.WriteLine("No hay pacientes registrados en este momento.");
+                Console.WriteLine("No hay pacientes registrados en este momento."); //Este es el out put que se muestra si no hay pacientes registrados en el sistema.
             }
             else
             {
-                for (int i = 0; i < GestorPacientes.contadorPacientes; i++)
+                for (int i = 0; i < GestorPacientes.contadorPacientes; i++)//Aqui se recorre el arreglo de pacientes registrados y se muestra la informaccion guardada
                 {
                     string nombre = GestorPacientes.nombresPacientes[i];
                     int edad = GestorPacientes.edades[i];
                     string codigo = GestorPacientes.codigosCitas[i];
-
                     int indexEspecialidad = GestorPacientes.especialidades[i] - 1;
                     string nombreEsp = (indexEspecialidad >= 0 && indexEspecialidad < EspecialidadesValidas.Count) 
                         ? EspecialidadesValidas[indexEspecialidad] : "Desconocida";
-
                     TipoTriage triage = GestorPacientes.triages[i];
-                    
-                    string textoEstado = GestorPacientes.estados[i] switch {
+                    string textoEstado = GestorPacientes.estados[i] switch {              // los estados del paciente que pide la rubrica.
                         'A' => "Atendido",
                         'C' => "Cancelada/Referido",
                         'P' => "Pendiente",
                         _ => "Desconocido"
                     };
-
                     string textoPago = formasPago[i] switch {
                         1 => "Efectivo", 2 => "Tarjeta", 3 => "Seguro", _ => "N/A"
                     };
-
                     Console.Write($"[{codigo}] {nombre.PadRight(20)} | Esp: {nombreEsp.PadRight(16)} | Est: {textoEstado.PadRight(18)} | Pago: {textoPago.PadRight(8)} | Desc: ${GestorPacientes.descuentosTotales[i]:F2} | Tr: ");
                     Console.ForegroundColor = triage switch
                     {
@@ -102,27 +96,27 @@ namespace ClinicaMedicaDeEspecialidades
             Console.WriteLine("\nPresione cualquier tecla para regresar al menú.");
             Console.ReadKey();
         }
-        private static void CalificarMedico()
+        private static void CalificarMedico()  //esta es una funcion del main para calificar a los docotores de la clinica.
         {
             Console.Clear();
-            Console.WriteLine("--- CALIFICAR ATENCIÓN MÉDICA ---");
-            bool hayAtendidos = false;
+            Console.WriteLine("--- CALIFICAR ATENCIÓN MÉDICA ---");         
+            bool hayAtendidos = false; //define una variable de tipo booleano.
             for (int i = 0; i < GestorPacientes.contadorPacientes; i++)
             {
-                if (GestorPacientes.estados[i] == 'A' && calificaciones[i] == 0) 
+                if (GestorPacientes.estados[i] == 'A' && calificaciones[i] == 0) //busca pasintes atendidos pero que la califficacion sea == 0 o no exista.
                 {
                     Console.WriteLine($"[{i}] {GestorPacientes.codigosCitas[i]} - {GestorPacientes.nombresPacientes[i]}");
                     hayAtendidos = true;
                 }
             }
-            if (!hayAtendidos)
+            if (!hayAtendidos) //si esta variable es false, no hay pacientes atendidos para calificar.
             {
                 Console.WriteLine("No hay pacientes en estado 'Atendido' pendientes de calificar.");
                 Console.WriteLine("\nPresione cualquier tecla para regresar...");
                 Console.ReadKey();
                 return;
             }
-            Console.Write("\nIngrese el índice del paciente para calificar: ");
+            Console.Write("\nIngrese el índice [#] del paciente que desea calificar: ");
             if (int.TryParse(Console.ReadLine(), out int indice) && indice >= 0 && indice < GestorPacientes.contadorPacientes && GestorPacientes.estados[indice] == 'A')
             {
                 Console.WriteLine("\nSeleccione el Médico que lo atendió:");
@@ -134,7 +128,6 @@ namespace ClinicaMedicaDeEspecialidades
                 if (int.TryParse(Console.ReadLine(), out int opcMedico) && opcMedico >= 1 && opcMedico <= GestorMedicos.nombresMedicos.Length)
                 {
                     GestorPacientes.medicosAtencion[indice] = GestorMedicos.nombresMedicos[opcMedico - 1];
-
                     Console.Write("\nIngrese la calificación del servicio (Escala del 1 al 5): ");
                     if (int.TryParse(Console.ReadLine(), out int nota) && nota >= 1 && nota <= 5)
                     {
@@ -161,19 +154,15 @@ namespace ClinicaMedicaDeEspecialidades
                 Console.WriteLine("Índice incorrecto, el paciente no existe, o no está en estado 'Atendido'.");
                 Console.ResetColor();
             }
-
             Console.WriteLine("\nPresione cualquier tecla para continuar...");
             Console.ReadKey();
         }
         private static void BuscarPaciente()
         {
             Console.Clear();
-            Console.WriteLine("--- BÚSQUEDA DE PACIENTE ---");
-            Console.Write("Ingrese el Código del paciente (Ej. Pte-0001) o el Nombre/Apellido: ");
+            Console.WriteLine("--- BÚSQUEDA DE PACIENTE ---"); // Aqui buscas el paciente por du codigo o nombre completo, no acepta nombre parciales.
             string? busqueda = Console.ReadLine()?.Trim().ToLower();
-
             if (string.IsNullOrEmpty(busqueda)) return;
-
             bool encontrado = false;
             for (int i = 0; i < GestorPacientes.contadorPacientes; i++)
             {
