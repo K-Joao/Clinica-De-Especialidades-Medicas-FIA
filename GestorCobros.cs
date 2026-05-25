@@ -46,17 +46,9 @@ namespace ClinicaMedicaDeEspecialidades
                 Console.WriteLine("2. Cancelar Cita / Referir Paciente"); 
                 Console.Write("Seleccione una opción: ");
                 string? accion = Console.ReadLine();
-                if (accion == "2")
-                {
-                    GestorPacientes.estados[indice] = 'C'; 
-                    GestorPacientes.costos[indice] = 0.0;  
-                    GestorArchivos.GuardarDatos(); //guarda los datos en un Txt que esta dentro de la carpeta temporal bin
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("\nCita Cancelada/Referida exitosamente. No se generarán cobros.");
-                    Console.ResetColor();
-                }
-                else if (accion == "1")
-                {
+                switch (accion)//este switch es para elegir entre procesar el pago o cancelar la cita
+                {   
+                    case "1":
                     if (GestorPacientes.triages[indice] == TipoTriage.Rojo)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
@@ -87,8 +79,6 @@ namespace ClinicaMedicaDeEspecialidades
                     }
                     double totalDescuento = descuentoEdad + descuentoSeguro;
                     double totalAPagar = costoBase - totalDescuento;
-                    GestorPacientes.descuentosTotales[indice] = totalDescuento;
-                    GestorPacientes.costos[indice] = totalAPagar;
                     Console.WriteLine("\n=========================================");
                     Console.WriteLine("                RESUMEN DE COBRO            ");//Esta es la factura que se muestra en la consola.
                     Console.WriteLine("============================================");
@@ -102,6 +92,8 @@ namespace ClinicaMedicaDeEspecialidades
                     Console.Write("\n¿Confirmar pago y marcar cita como Atendida (A)? (S/N): ");
                     if (Console.ReadLine()?.Trim().ToUpper() == "S")
                     {
+                        GestorPacientes.descuentosTotales[indice] = totalDescuento;//los descuentos se aplican despues de confirmar el pago, para que se pueda mostrar el resumen de cobro sin afectar el costo base hasta que se confirme el pago.
+                        GestorPacientes.costos[indice] = totalAPagar; //el total a pagar se guarda en el arreglo de costos después de confirmar el pago, para que se pueda mostrar el resumen de cobro sin afectar el costo base hasta que se confirme el pago.
                         GestorPacientes.estados[indice] = 'A'; 
                         GestorArchivos.GuardarDatos(); // busca y guarda los datos en el archivo
                         Console.ForegroundColor = ConsoleColor.Green;
@@ -112,10 +104,20 @@ namespace ClinicaMedicaDeEspecialidades
                     {
                         Console.WriteLine("\nOperación cancelada. La cita sigue Pendiente.");
                     }
-                }
-                else
-                {
-                    Console.WriteLine("\nOpción no válida.");
+                        break;
+                    case "2":
+                    GestorPacientes.estados[indice] = 'C'; 
+                    GestorPacientes.costos[indice] = 0.0;  
+                    GestorArchivos.GuardarDatos(); //guarda los datos en un Txt que esta dentro de la carpeta temporal bin
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\nCita Cancelada/Referida exitosamente. No se generarán cobros.");
+                    Console.ResetColor();
+                        break;
+                    default:
+                        Console.WriteLine("\nOpción no válida.");
+                        Console.WriteLine("\nPresione cualquier tecla para regresar...");
+                        Console.ReadKey();
+                        return;
                 }
             }
             else
