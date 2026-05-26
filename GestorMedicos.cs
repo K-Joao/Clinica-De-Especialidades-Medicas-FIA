@@ -7,7 +7,7 @@ namespace ClinicaMedicaDeEspecialidades
         public static void InicializarMedicos()
         {
             nombresMedicos[0] = "Dr. Carlos Orellana (General)";
-            nombresMedicos[1] = "Dra. Ana Dinora (Ginecologa)";
+            nombresMedicos[1] = "Dra. Ana Dinora (Ginecóloga)";
             nombresMedicos[2] = "Dr. Sanchez Ceren (General)";
             nombresMedicos[3] = "Dra. Laura Mendez (General)";
             nombresMedicos[4] = "Dr. Shafick Handall (Ortopedista)";
