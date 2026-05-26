@@ -79,7 +79,7 @@ namespace ClinicaMedicaDeEspecialidades
                     string textoPago = formasPago[i] switch {
                         1 => "Efectivo", 2 => "Tarjeta", 3 => "Seguro", _ => "N/A"
                     };
-                    Console.Write($"[{codigo}] {nombre.PadRight(20)} | Esp: {nombreEsp.PadRight(16)} | Est: {textoEstado.PadRight(18)} | Pago: {textoPago.PadRight(8)} | Desc: ${GestorPacientes.descuentosTotales[i]:F2} | Tr: ");
+                    Console.Write($"[{codigo}] {nombre.PadRight(20)} | Esp: {nombreEsp.PadRight(16)} | Est: {textoEstado.PadRight(18)} | Pago: {textoPago.PadRight(8)} | Monto: ${GestorPacientes.costos[i]:F2} |Desc: ${GestorPacientes.descuentosTotales[i]:F2} | Tr: ");
                     Console.ForegroundColor = triage switch
                     {
                         TipoTriage.Rojo => ConsoleColor.Red,
