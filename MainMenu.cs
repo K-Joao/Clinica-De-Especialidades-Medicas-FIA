@@ -119,33 +119,21 @@ namespace ClinicaMedicaDeEspecialidades
             Console.Write("\nIngrese el índice [#] del paciente que desea calificar: ");
             if (int.TryParse(Console.ReadLine(), out int indice) && indice >= 0 && indice < GestorPacientes.contadorPacientes && GestorPacientes.estados[indice] == 'A')
             {
-                Console.WriteLine("\nSeleccione el Médico que lo atendió:");
-                for (int i = 0; i < GestorMedicos.nombresMedicos.Length; i++)
+                string nombreMedico = GestorPacientes.medicosAtencion[indice];//el medico es buscado automaticamente a partir del indice del paciente seleccionado, no se pide al usuario que lo ingrese.
+                Console.WriteLine($"\nCalificando atención del médico: {nombreMedico}");//se muestra el nombre del medico que atendio al paciente seleccionado para calificar.
+                Console.WriteLine("Favor de escribir un numero del 1 al 5 para calificar la atención recibida:");//se pide al usuario que ingrese una calificacion
+                if (int.TryParse(Console.ReadLine(), out int nota) && nota >= 1 && nota <= 5)
                 {
-                    Console.WriteLine($"{i + 1}. {GestorMedicos.nombresMedicos[i]}");
-                }
-                Console.Write("Opción: ");
-                if (int.TryParse(Console.ReadLine(), out int opcMedico) && opcMedico >= 1 && opcMedico <= GestorMedicos.nombresMedicos.Length)
-                {
-                    GestorPacientes.medicosAtencion[indice] = GestorMedicos.nombresMedicos[opcMedico - 1];
-                    Console.Write("\nIngrese la calificación del servicio (Escala del 1 al 5): ");
-                    if (int.TryParse(Console.ReadLine(), out int nota) && nota >= 1 && nota <= 5)
-                    {
-                        calificaciones[indice] = nota;
-                        GestorArchivos.GuardarDatos(); // Guardar en el txt
+                    calificaciones[indice] = nota;//la calificacion se guarda en el arreglo de calificaciones en la posicion del indice del paciente seleccionado.
+                    GestorArchivos.GuardarDatos(); // Guardar en el txt
 
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("\n¡Calificación guardada exitosamente!");
-                        Console.ResetColor();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Calificación inválida. Debe ser un número entre 1 y 5.");
-                    }
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("\n¡Calificación guardada exitosamente!");
+                    Console.ResetColor();
                 }
                 else
                 {
-                    Console.WriteLine("Médico seleccionado no es válido.");
+                    Console.WriteLine("Calificación inválida. Debe ser un número entre 1 y 5.");
                 }
             }
             else
