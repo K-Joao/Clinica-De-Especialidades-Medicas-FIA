@@ -7,7 +7,6 @@ namespace ClinicaMedicaDeEspecialidades
         public static string[] codigosCitas = new string[100];
         public static string[] fechasCitas = new string[100];
         public static int[] edades = new int[100];
-        public static int[] templatesEspecialidades = new int[100]; 
         public static int[] especialidades = new int[100]; 
         public static double[] costos = new double[100];
         public static char[] estados = new char[100];       

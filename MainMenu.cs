@@ -10,8 +10,7 @@ namespace ClinicaMedicaDeEspecialidades
         };
         public static int[] formasPago = new int[100];       
         public static int[] calificaciones = new int[100];
-        public static string[] comentarios = new string[100];
-        public static void Main(string[] args)
+        public static void Main(string[] args) //este es el main del programa no eliminar aunque no tenga referencias :)
         {
             GestorMedicos.InicializarMedicos();
             GestorArchivos.CargarDatos();
