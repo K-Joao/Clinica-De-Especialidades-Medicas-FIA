@@ -103,7 +103,7 @@ namespace ClinicaMedicaDeEspecialidades
             };
             if(palabraClave != "")//si se encontro una palabra clave valida, se busca el medico que corresponda a esa especialidad y se asigna al paciente.
             {
-                string medicoAsignado = null;//variable para guardar el nombre del medico asignado al paciente.
+                string medicoAsignado = "";//variable para guardar el nombre del medico asignado al paciente.
                 int menorCarga = int.MaxValue;//variable para guardar la menor carga de pacientes que tenga un medico de esa especialidad.
                 for (int i = 0; i < GestorMedicos.nombresMedicos.Length; i++)//este ciclo busca en la lista de medicos el que corresponda a la especialidad elegida por el paciente.
                 {
@@ -124,7 +124,7 @@ namespace ClinicaMedicaDeEspecialidades
                         }
                     }
                 }
-                if (medicoAsignado != null)
+                if (medicoAsignado != "")
                 {
                     medicosAtencion[contadorPacientes] = medicoAsignado;
                 }
