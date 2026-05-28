@@ -22,7 +22,7 @@ namespace ClinicaMedicaDeEspecialidades
                 Console.WriteLine("    CLINICA MEDICA DE ESPECIALIDADES FIA   ");
                 Console.WriteLine("===========================================");
                 Console.WriteLine("1. Ingresar Nuevo Paciente");
-                Console.WriteLine("2. Ver Pacientes Registrados");
+                Console.WriteLine("2. Ver Reportes");
                 Console.WriteLine("3. Gestionar Cobros / Cancelar Citas");
                 Console.WriteLine("4. Calificar Atención (Solo Atendidos)"); 
                 Console.WriteLine("5. Buscar Paciente"); 
@@ -33,7 +33,7 @@ namespace ClinicaMedicaDeEspecialidades
                 switch (opcion)
                 {
                     case "1": GestorPacientes.CapturarDatosPaciente(); break;
-                    case "2": MostrarPacientes(); break;
+                    case "2": MostrarReportes(); break;//MostrarReportes es una funcion del main que se encarga de mostrar los reportes de pacientes registrados y promedio de calificaciones por medico.
                     case "3": GestorCobros.ProcesarCobro(); break;
                     case "4": CalificarMedico(); break;
                     case "5": BuscarPaciente(); break;
@@ -49,6 +49,39 @@ namespace ClinicaMedicaDeEspecialidades
                         break;
                 }
             }
+        }
+        public static void MostrarReportes()//esta funcion se encarga de mostrar los reportes
+        {
+            bool volver = false;//esta variable se utiliza para controlar el bucle del menú de reportes, permitiendo al usuario volver al menú principal cuando lo desee.
+            while (!volver)//mientras volver sea false, el menú de reportes seguirá mostrándose, permitiendo al usuario seleccionar diferentes opciones de reporte hasta que decida volver al menú principal.
+            {
+                Console.Clear();//Limpia la consola
+                Console.WriteLine("=== Menú de Reportes ===");
+                Console.WriteLine("1. Reporte de pacientes registrados");
+                Console.WriteLine("2. Reporte de promedio de calificaciones por médico");
+                Console.WriteLine("3. Volver al menú principal");
+                Console.WriteLine("===================================================");
+                Console.WriteLine("Seleccione una opción de reporte:");
+                string? opcionReporte = Console.ReadLine();//Lee la opción seleccionada por el usuario para mostrar el reporte correspondiente o volver al menú principal.
+                switch (opcionReporte)//Dependiendo de la opción seleccionada, se ejecutará el bloque de código correspondiente para mostrar el reporte deseado o volver al menú principal.
+                {
+                    case "1":
+                        MostrarPacientes();//Llama a la función MostrarPacientes para mostrar el reporte de pacientes registrados.
+                        break;
+                    case "2":
+                        GestorMedicos.NotaPromedioMedicos();//Llama a la función NotaPromedioMedicos de la clase GestorMedicos para mostrar el reporte de promedio de calificaciones por médico.
+                        break;
+                    case "3"://Si el usuario selecciona la opción 3, se establece volver como true, lo que hará que el bucle del menú de reportes termine y el programa regrese al menú principal.
+                        volver = true;
+                        break;
+                    default://Si el usuario ingresa una opción no válida, se muestra un mensaje de error y se espera a que el usuario presione una tecla para reintentar.
+                        Console.WriteLine("\nOpción no válida. Intente nuevamente.");
+                        Console.ReadKey();
+                        break;
+                }
+                            
+            }
+            
         }
         private static void MostrarPacientes()
         {
