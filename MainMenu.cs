@@ -22,7 +22,7 @@ namespace ClinicaMedicaDeEspecialidades
                 Console.WriteLine("    CLINICA MEDICA DE ESPECIALIDADES FIA   ");
                 Console.WriteLine("===========================================");
                 Console.WriteLine("1. Ingresar Nuevo Paciente");
-                Console.WriteLine("2. Ver Reportes");
+                Console.WriteLine("2. Ver Reportes");//esta opcion lleva a un submenu de reportes.
                 Console.WriteLine("3. Gestionar Cobros / Cancelar Citas");
                 Console.WriteLine("4. Calificar Atención (Solo Atendidos)"); 
                 Console.WriteLine("5. Buscar Paciente"); 
@@ -56,10 +56,12 @@ namespace ClinicaMedicaDeEspecialidades
             while (!volver)//mientras volver sea false, el menú de reportes seguirá mostrándose, permitiendo al usuario seleccionar diferentes opciones de reporte hasta que decida volver al menú principal.
             {
                 Console.Clear();//Limpia la consola
+                Console.WriteLine("===================================================");
                 Console.WriteLine("=== Menú de Reportes ===");
+                Console.WriteLine("===================================================");
                 Console.WriteLine("1. Reporte de pacientes registrados");
                 Console.WriteLine("2. Reporte de promedio de calificaciones por médico");
-                Console.WriteLine("3. Ganancias por especialidad");
+                Console.WriteLine("3. Reporte de Ingresos");
                 Console.WriteLine("4. Volver al menú principal");
                 Console.WriteLine("===================================================");
                 Console.WriteLine("Seleccione una opción:");
