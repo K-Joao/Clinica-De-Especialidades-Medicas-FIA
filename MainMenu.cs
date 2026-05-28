@@ -6,7 +6,7 @@ namespace ClinicaMedicaDeEspecialidades
     {
         public static readonly List<string> EspecialidadesValidas = new List<string>
         {
-            "Medicina General", "Pediatría", "Ginecología", "Cardiología", "Dermatología", "Oftalmología", "Odontología"
+            "Medicina General", "Pediatría", "Ginecología", "Cardiología", "Dermatología", "Oftalmología", "Odontología", "Ortopedia"
         };
         public static int[] formasPago = new int[100];       
         public static int[] calificaciones = new int[100];
@@ -59,9 +59,10 @@ namespace ClinicaMedicaDeEspecialidades
                 Console.WriteLine("=== Menú de Reportes ===");
                 Console.WriteLine("1. Reporte de pacientes registrados");
                 Console.WriteLine("2. Reporte de promedio de calificaciones por médico");
-                Console.WriteLine("3. Volver al menú principal");
+                Console.WriteLine("3. Ganancias por especialidad");
+                Console.WriteLine("4. Volver al menú principal");
                 Console.WriteLine("===================================================");
-                Console.WriteLine("Seleccione una opción de reporte:");
+                Console.WriteLine("Seleccione una opción:");
                 string? opcionReporte = Console.ReadLine();//Lee la opción seleccionada por el usuario para mostrar el reporte correspondiente o volver al menú principal.
                 switch (opcionReporte)//Dependiendo de la opción seleccionada, se ejecutará el bloque de código correspondiente para mostrar el reporte deseado o volver al menú principal.
                 {
@@ -71,7 +72,10 @@ namespace ClinicaMedicaDeEspecialidades
                     case "2":
                         GestorMedicos.NotaPromedioMedicos();//Llama a la función NotaPromedioMedicos de la clase GestorMedicos para mostrar el reporte de promedio de calificaciones por médico.
                         break;
-                    case "3"://Si el usuario selecciona la opción 3, se establece volver como true, lo que hará que el bucle del menú de reportes termine y el programa regrese al menú principal.
+                    case "3":
+                        GestorCobros.GananciasPorEspecialidad();//Llama a la función GananciasPorEspecialidad de la clase GestorCobros para mostrar el reporte de ganancias por especialidad.
+                        break;
+                    case "4"://Si el usuario selecciona la opción 4, se establece volver como true, lo que hará que el bucle del menú de reportes termine y el programa regrese al menú principal.
                         volver = true;
                         break;
                     default://Si el usuario ingresa una opción no válida, se muestra un mensaje de error y se espera a que el usuario presione una tecla para reintentar.

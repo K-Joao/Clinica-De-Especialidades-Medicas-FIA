@@ -6,4 +6,15 @@ namespace ClinicaMedicaDeEspecialidades
         Amarillo,
         Rojo
     }
+
+    public static class TipoTriages
+    {
+        public static string ObtenerNombreEspecialidad(int codigo)
+        {
+            int indice = codigo - 1;
+            return (indice >= 0 && indice < MainMenu.EspecialidadesValidas.Count)
+                ? MainMenu.EspecialidadesValidas[indice]
+                : "Desconocida";
+        }
+    }
 }

@@ -3,7 +3,7 @@ namespace ClinicaMedicaDeEspecialidades
 {
     public static class GestorMedicos //esta clase se encarga de gestionar la información de los médicos.
     {
-        public static string[] nombresMedicos = new string[9];
+        public static string[] nombresMedicos = new string[10]; //arreglo para almacenar los nombres de los médicos disponibles en la clínica.
         public static void InicializarMedicos()
         {
             nombresMedicos[0] = "Dr. Carlos Orellana (General)";
@@ -15,6 +15,7 @@ namespace ClinicaMedicaDeEspecialidades
             nombresMedicos[6] = "Dra. Maria Rodriguez (Cardióloga)";
             nombresMedicos[7] = "Dr. Nayib bukele (Dermatólogo)";
             nombresMedicos[8] = "Dr. Francisco Alabi (Oftalmólogo)";
+            nombresMedicos[9] = "Dra. Gabriela Mendez (Odontóloga)";
         }
         public static void NotaPromedioMedicos()//esta funcion se encarga de calcular y mostrar el promedio de calificaciones por médico, considerando solo a los pacientes que han sido atendidos (estado 'A') y que tienen calificaciones registradas.
         {

@@ -99,6 +99,7 @@ namespace ClinicaMedicaDeEspecialidades
                 "Oftalmología" => "Oftalmólogo",
                 "Ortopedia" => "Ortopedista",
                 "Ginecología" => "Ginecóloga",
+                "Odontología" => "Odontóloga",
                 _ => ""
             };
             if(palabraClave != "")//si se encontro una palabra clave valida, se busca el medico que corresponda a esa especialidad y se asigna al paciente.

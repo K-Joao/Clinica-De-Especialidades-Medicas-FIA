@@ -48,7 +48,7 @@ namespace ClinicaMedicaDeEspecialidades
                 string? accion = Console.ReadLine();
                 switch (accion)//este switch es para elegir entre procesar el pago o cancelar la cita
                 {   
-                    case "1":
+                    case "1"://si se elige procesar el pago, se muestra un resumen de cobro con los descuentos aplicados y se pregunta si se confirma el pago para marcar la cita como atendida.
                     if (GestorPacientes.triages[indice] == TipoTriage.Rojo)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
@@ -94,7 +94,7 @@ namespace ClinicaMedicaDeEspecialidades
                     {
                         GestorPacientes.descuentosTotales[indice] = totalDescuento;//los descuentos se aplican despues de confirmar el pago, para que se pueda mostrar el resumen de cobro sin afectar el costo base hasta que se confirme el pago.
                         GestorPacientes.costos[indice] = totalAPagar; //el total a pagar se guarda en el arreglo de costos después de confirmar el pago, para que se pueda mostrar el resumen de cobro sin afectar el costo base hasta que se confirme el pago.
-                        GestorPacientes.estados[indice] = 'A'; 
+                        GestorPacientes.estados[indice] = 'A'; //se marca la cita como atendida después de confirmar el pago, para que se pueda mostrar el resumen de cobro sin afectar el estado de la cita hasta que se confirme el pago.
                         GestorArchivos.GuardarDatos(); // busca y guarda los datos en el archivo
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("\n¡Pago registrado! La cita ha sido marcada como Atendida.");
@@ -105,7 +105,7 @@ namespace ClinicaMedicaDeEspecialidades
                         Console.WriteLine("\nOperación cancelada. La cita sigue Pendiente.");
                     }
                         break;
-                    case "2":
+                    case "2"://si se elige cancelar la cita o referir al paciente, se marca la cita como cancelada/referida y se eliminan los cobros asociados a esa cita.
                     GestorPacientes.estados[indice] = 'C'; 
                     GestorPacientes.costos[indice] = 0.0;  
                     GestorArchivos.GuardarDatos(); //guarda los datos en un Txt que esta dentro de la carpeta temporal bin
@@ -126,7 +126,63 @@ namespace ClinicaMedicaDeEspecialidades
                 Console.WriteLine("\nÍndice incorrecto o la cita no está en estado Pendiente.");
                 Console.ResetColor();
             }
-            Console.WriteLine("\nPresione cualquier tecla para regresar al menú...");
+            Console.WriteLine("\nPresione cualquier tecla para regresar al menú de Reportes...");
+            Console.ReadKey();
+        }
+        public static void GananciasPorEspecialidad()
+        {
+            Console.Clear();
+            Console.WriteLine("=== GANANCIAS POR ESPECIALIDAD ===");
+            Console.WriteLine("=========================================================");
+            if (GestorPacientes.contadorPacientes == 0)
+            {
+                Console.WriteLine("Aun noo hay pacientes registrados en el sistema.");
+                Console.WriteLine("\nPresione cualquier tecla para regresar...");
+                Console.ReadKey();
+                return;
+            }
+            string[] especialidades = new string[GestorPacientes.contadorPacientes];
+            double[] gananciasPorEspecialidad = new double[GestorPacientes.contadorPacientes];
+            int contadorEspecialidades = 0;
+            for (int i = 0; i < GestorPacientes.contadorPacientes; i++)
+            {
+                if (GestorPacientes.estados[i] == 'A')
+                {
+                    string nombreEspecialidad = TipoTriages.ObtenerNombreEspecialidad(GestorPacientes.especialidades[i]);
+                    int indiceExistente = -1;
+                    for (int j = 0; j < contadorEspecialidades; j++)
+                    {
+                        if (especialidades[j] == nombreEspecialidad)
+                        {
+                            indiceExistente = j;
+                            break;
+                        }
+                    }
+                    if (indiceExistente != -1)
+                    {
+                        gananciasPorEspecialidad[indiceExistente] += GestorPacientes.costos[i];
+                    }
+                    else
+                    {
+                        especialidades[contadorEspecialidades] = nombreEspecialidad;
+                        gananciasPorEspecialidad[contadorEspecialidades] = GestorPacientes.costos[i];
+                        contadorEspecialidades++;
+                    }
+                }
+            }
+            if (contadorEspecialidades == 0)
+            {
+                Console.WriteLine("No hay citas atendidas para calcular ganancias por especialidad.");
+                Console.WriteLine("\nPresione cualquier tecla para regresar...");
+                Console.ReadKey();
+                return;
+            }
+            for (int i = 0; i < contadorEspecialidades; i++)
+            {
+                Console.WriteLine($"Especialidad: {especialidades[i].PadRight(30)} - Ganancias Totales: ${gananciasPorEspecialidad[i]:F2}");
+            }
+            Console.WriteLine("=========================================================");
+            Console.WriteLine("\nPresione cualquier tecla para regresar al menú de Reportes...");
             Console.ReadKey();
         }
     }
